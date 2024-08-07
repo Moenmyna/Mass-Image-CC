@@ -7,6 +7,7 @@ To achieve this, I came across the clear winner that is .AVIF in terms of filesi
 ## Installation and Usage
 ### Pre-requisite
 - ImageMagick 7.1.1-33 or above
+- libjxl-utils
 
 I recommend cloning this repo to a folder of your choosing and then symlinking the .sh scripts to your `~/.local/bin`. Make sure the .sh scripts have execute permissions with `chmod +x` if necessary!
 
