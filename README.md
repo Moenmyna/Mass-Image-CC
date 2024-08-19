@@ -2,16 +2,22 @@
 
 This repo contains some bash scripts that I've made to help me reduce the size of images on my drives.
 
-To achieve this, I came across the clear winner that is .AVIF in terms of filesize reduction while keeping image quality very high if not indistinguishable from the original image. As a result, the majority of the scripts convert images to .AVIF.
+Inside you'll find scripts that convert images primarily to either AVIF or JXL. Most people will probably want to use the AVIF scripts due to support for JXL being low (Unfortunately...😢) but feel free to use what you prefer! Additionally all the scripts have comments inside describing what they do, so please look at their source if their purpose is unclear.
+
+You can also find copy-pastable versions of the scripts in the `One_Line_Scripts.md` document in this repo; in the event that you don't want to install the scripts themselves and just want to perform a conversion manually or tweak the settings more easily before running!
+
+## Disclaimer
+
+My hope in sharing these is that they will be found useful but please note that you do so at your ***own risk!*** I am not responsible for any potential loss of data that may occur when using these scripts!
 
 ## Installation and Usage
 ### Pre-requisite
 - ImageMagick 7.1.1-33 or above
-- libjxl-utils
+- [libjxl-utils](https://github.com/libjxl/libjxl)
 
-I recommend cloning this repo to a folder of your choosing and then symlinking the .sh scripts to your `~/.local/bin`. Make sure the .sh scripts have execute permissions with `chmod +x` if necessary!
+I recommend cloning this repo to a folder of your choosing and then symlinking the .sh scripts you want to your `~/.local/bin`. Make sure the .sh scripts have execute permissions with `chmod +x` if necessary!
 
-To use the scripts once they are in `~/.local/bin`, in a terminal, move to the folder containing the images that you want to convert to .AVIF and run the appropriate script.
+To use the scripts once they are in `~/.local/bin`, in a terminal, move to the folder containing the images that you want to convert to AVIF/JXL and run the appropriate script.
 
 For example, if you wanted to convert all `.png` files in `~/Pictures`, do this:
 
