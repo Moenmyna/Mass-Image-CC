@@ -8,22 +8,22 @@ Happy converting!
 
 # AVIF Targets
 
-## (PNG to AVIF)
+## (PNG to AVIF) [Lossy]
 ```bash
 for f in ./*.png ; do magick "$f" -quality 98 "${f%.png}.avif" ; done
 ```
 
-## (JPG to AVIF) Script to reduce filesize of JPGs
+## (JPG to AVIF) Script to reduce filesize of JPGs [Lossy]
 ```bash
 for f in ./*.jp*g ; do magick "$f" -quality 96 "${f%.jp*g}.avif" ; done
 ```
 
-## (JPG to AVIF) If it's *really* big, add -resize flag, adjust % from 80%-50% as necessary
+## (JPG to AVIF) If it's *really* big, add -resize flag, adjust % from 80%-50% as necessary [Lossy]
 ```bash
 for f in ./*.jp*g ; do magick "$f" -resize 75% -quality 96 "${f%.jp*g}.avif" ; done
 ```
 
-## (WEBP to AVIF) Script to reduce WEBP
+## (WEBP to AVIF) Script to reduce WEBP [Lossy]
 ```bash
 for f in ./*.webp ; do magick "$f" -quality 98 "${f%.webp}.avif" ; done
 ```
@@ -35,12 +35,12 @@ for f in ./*.avif; do magick "$f" -quality 100 "${f%.avif}.webp" ; done
 
 # JXL Targets
 
-## (PNG to JXL)
+## (PNG to JXL) [Lossy]
 ```bash
 for f in ./*.png ; do magick "$f" -quality 98 "${f%.png}.jxl" ; done
 ```
 
-## (PNG to JXL) Using the JXL ref tool
+## (PNG to JXL) Using the JXL reference tool [Lossy]
 ```bash
 for f in ./*.png ; do cjxl --quiet "$f" "${f%.png}.jxl" ; done
 ```
@@ -50,7 +50,12 @@ for f in ./*.png ; do cjxl --quiet "$f" "${f%.png}.jxl" ; done
 for f in ./*.jp*g ; do cjxl --quiet --lossless_jpeg=1 "$f" "${f%.jp*g}.jxl" ; done
 ```
 
-## (JPG to JXL) Optimize to JXL (If you can't get/use the JXL ref tool)
+## (JPG to JXL) Reduce filesize using the reference tool [Lossy]
+```bash
+for f in ./*.jp*g ; do cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.jp*g}.jxl" ; done
+```
+
+## (JPG to JXL) If you can't get/use the JXL ref tool [Lossy]
 ```bash
 for f in ./*.jp*g ; do magick "$f" -quality 95 "${f%.jp*g}.jxl" ; done
 ```
