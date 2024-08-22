@@ -1,4 +1,4 @@
-# Mass image conversion scripts
+# Mass image compression and conversion scripts
 
 This repo contains some bash scripts that I've made to help me reduce the size of images on my drives.
 
