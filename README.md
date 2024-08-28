@@ -12,10 +12,10 @@ My hope in sharing these is that they will be found useful but please note that 
 
 ## Installation and Usage
 ### Pre-requisite
-- ImageMagick 7.1.1-33 or above
+- [ImageMagick](https://github.com/ImageMagick/ImageMagick) 7.1.1-33 or above
 - [libjxl-utils](https://github.com/libjxl/libjxl)
 
-I recommend cloning this repo to a folder of your choosing and then symlinking the .sh scripts you want to your `~/.local/bin`. Make sure the .sh scripts have execute permissions with `chmod +x` if necessary!
+I recommend cloning this repo to a folder of your choosing and then symlinking the .sh scripts you want to your `~/.local/bin`. You can also place them anywhere you'd like, as long as they're on your **$PATH**. Make sure the .sh scripts have execute permissions with `chmod +x` if necessary!
 
 To use the scripts once they are in `~/.local/bin`, in a terminal, move to the folder containing the images that you want to convert to AVIF/JXL and run the appropriate script.
 
