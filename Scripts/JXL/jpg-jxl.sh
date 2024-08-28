@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# SPDX-License-Identifier: MPL-2.0
+
 # Use this to optimize your existing .jpg losslessly!
 # NOTE: You need the "cjxl" tool to run this!
 

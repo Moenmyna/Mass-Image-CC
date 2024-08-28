@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# SPDX-License-Identifier: MPL-2.0
+
 # Find all the .jpg files in the current working directory, invoke the magick command on each file, convert those files to .avif with the quality setting at "96", do this until all files have been converted.
 # "-resize" flag has been added for additional filesize reduction.
 # Modify "-resize" value between 80%-50% depending on amount of filesize you're trying to save.
