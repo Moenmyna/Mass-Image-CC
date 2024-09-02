@@ -34,6 +34,7 @@ for f in ./*.avif; do magick "$f" -quality 100 "${f%.avif}.webp" ; done
 ```
 
 # JXL Targets
+> For these, the reference tool (CJXL) is preferred but scripts that use ImageMagick are provided for those who can't use it!
 
 ## (PNG to JXL) [Lossy]
 ```bash
@@ -42,7 +43,7 @@ for f in ./*.png ; do magick "$f" -quality 98 "${f%.png}.jxl" ; done
 
 ## (PNG to JXL) Using the JXL reference tool [Lossy]
 ```bash
-for f in ./*.png ; do cjxl --quiet "$f" "${f%.png}.jxl" ; done
+for f in ./*.png ; do cjxl -d 0.4 --quiet "$f" "${f%.png}.jxl" ; done
 ```
 
 ## (JPG to JXL) Using the reference JXL tool [Lossless]
