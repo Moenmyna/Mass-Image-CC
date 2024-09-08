@@ -13,4 +13,4 @@ for f in ./*.avif ; do magick "$f" -quality 100 "${f%.avif}.webp" ; done
 
 # Move all converted .webp files to a folder after conversion is complete.
 
-mkdir _converted && mv ./*.webp _converted
+mkdir _review && mv ./*.webp _review
