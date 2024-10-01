@@ -1,0 +1,30 @@
+#! /bin/bash
+
+# SPDX-License-Identifier: MPL-2.0
+
+# If the JPG you want to optimize is *really* big and you want to reduce it even further, use this script!
+# Using "-d 1.0" will produce a "visually lossless" image vs a mathematically lossless one but at greatly reduced filesize
+
+# NOTE: This is technically a lossy conversion, please keep this in mind!
+# NOTE: You need the "cjxl" tool to run this!
+
+# Test to see if we can make a "_review" folder for the output, if not then exit
+
+mkdir _review || { echo "Folder _review already exists, please rename or remove before continuing!" >&2; exit 1; }
+
+# Find all JPG files in current directory, use the CJXL tool to losslessly convert to JXL, the test will exclude any symlinks!
+
+for f in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$f" && ! -h "$f" ]]; then
+    cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.*}.jxl"
+  fi
+done
+
+# Find all the original .JPGs and move them to our previously created "_review" folder if it's a file and not a symlink.
+
+for e in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$e" && ! -h "$e" ]] ; then
+    mv "$e" _review
+  fi
+done
+
