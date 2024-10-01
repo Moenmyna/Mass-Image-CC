@@ -9,9 +9,14 @@
 
 mkdir _review || { echo "Folder _review already exists, please rename or remove before continuing!" >&2; exit 1; }
 
-# Find all JPG files in current directory, use the CJXL tool to losslessly convert to JXL
+# Find all JPG files in current directory, use the CJXL tool to losslessly convert to JXL, the test will exclude any symlinks!
 
-for f in ./*.jp*g ; do cjxl --quiet --lossless_jpeg=1 "$f" "${f%.jp*g}.jxl" ; done
+for f in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$f" && ! -h "$f" ]]; then
+    cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl"
+  fi
+done
+
 
 # Create directory _review and then move all JPG files into it
 
