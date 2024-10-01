@@ -15,16 +15,15 @@ My hope in sharing these is that they will be found useful but please note that 
 - [ImageMagick](https://github.com/ImageMagick/ImageMagick) 7.1.1-33 or above
 - [libjxl-utils](https://github.com/libjxl/libjxl)
 
-I recommend cloning this repo to a folder of your choosing and then symlinking the .sh scripts you want to your `~/.local/bin`. You can also place them anywhere you'd like, as long as they're on your **$PATH**. Make sure the .sh scripts have execute permissions with `chmod +x` if necessary!
+I recommend cloning this repo to a folder of your choosing and then symlinking the scripts you want to your `~/.local/bin` from the repo. You can also place them anywhere you'd like, as long as they're on your **$PATH**. Make sure that the scripts have execute permissions with `chmod +x` if necessary!
 
 To use the scripts once they are in `~/.local/bin`, in a terminal, move to the folder containing the images that you want to convert to AVIF/JXL and run the appropriate script.
 
-For example, if you wanted to convert all `.png` files in `~/Pictures`, do this:
+For example, if you wanted to convert all `.png` files in `~/Pictures` to `.avif`, do this:
 
 ```
 cd ~/Pictures
-png-to-avif.sh
+png-to-avif
 ```
 
-Once completed, the script will create a new folder named `_review` and move all the `.png` files that were found into that folder.
-
+The script will first try to create a new folder named `_review` and if successful, begin converting all `.png` files it finds, before finally moving all the original `.png` files to the `_review` folder.

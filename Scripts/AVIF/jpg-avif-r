@@ -2,15 +2,27 @@
 
 # SPDX-License-Identifier: MPL-2.0
 
-# Find all the .jpg files in the current working directory, invoke the magick command on each file, 
-# convert those files to .avif with the quality setting at "96", do this until all files have been converted.
+# NOTE: I highly recommend using the script with cjxl tool instead of this one!
 
-# "-resize" flag has been added for additional filesize reduction.
-
+# NOTE: This will not only reduce quality but also resolution to reduce filesize!
 # Modify "-resize" value between 80%-50% depending on amount of filesize you're trying to save.
 
-for f in ./*.jp*g ; do magick "$f" -resize 75% -quality 96 "${f%.jp*g}.avif" ; done
+# Test to see if we can make a "_review" folder for the output, if not then exit
 
-# Move all the leftover .jpg files to a review folder after conversion is complete.
+mkdir _review || { echo "Folder _review already exists, please rename or remove before continuing!" >&2; exit 1; }
 
-mkdir _review && mv ./*.jp*g _review
+# Find all JPG files in current directory, use magick to compress and convert to AVIF, the test will exclude any symlinks!
+
+for f in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$f" && ! -h "$f" ]]; then
+    magick "$f" -resize 75% -quality 96 "${f%.*}.avif"
+  fi
+done
+
+# Find all the original .JPGs and move them to our previously created "_review" folder if it's a file and not a symlink
+
+for e in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$e" && ! -h "$e" ]] ; then
+    mv "$e" _review
+  fi
+done

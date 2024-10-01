@@ -5,10 +5,23 @@
 # Use this to optimize your existing .jpg losslessly!
 # NOTE: You need the "cjxl" tool to run this!
 
-# Find all JPG files in current directory, use the CJXL tool to losslessly convert to JXL
+# Test to see if we can make a "_review" folder for the output, if not then exit
 
-for f in ./*.jp*g ; do cjxl --quiet --lossless_jpeg=1 "$f" "${f%.jp*g}.jxl" ; done
+mkdir _review || { echo "Folder _review already exists, please rename or remove before continuing!" >&2; exit 1; }
 
-# Create directory _review and then move all JPG files into it
+# Find all JPG files in current directory, use the CJXL tool to losslessly convert to JXL, the test will exclude any symlinks!
 
-mkdir _review && mv ./*.jp*g _review
+for f in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$f" && ! -h "$f" ]]; then
+    cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl"
+  fi
+done
+
+# Find all the original .JPGs and move them to our previously created "_review" folder if it's a file and not a symlink.
+
+for e in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$e" && ! -h "$e" ]] ; then
+    mv "$e" _review
+  fi
+done
+

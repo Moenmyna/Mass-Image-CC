@@ -2,11 +2,22 @@
 
 # SPDX-License-Identifier: MPL-2.0
 
-# Find all the .webp files in the current working directory, invoke the magick command on each file, 
-# convert those files to .avif with the quality setting at "98", do this until all files have been converted.
+# Test to see if we can make a "_review" folder for the output, if not then exit
 
-for f in ./*.webp ; do magick "$f" -quality 98 "${f%.webp}.avif" ; done
+mkdir _review || { echo "Folder _review already exists, please rename or remove before continuing!" >&2; exit 1; }
 
-# Move all the leftover .webp files to a review folder after conversion is complete.
+# Find all WEBP files in current directory, use magick to convert them to AVIF, exclude any symlinks!
 
-mkdir _review && mv ./*.webp _review
+for f in ./*.[Ww][Ee][Bb][Pp] ; do
+  if [[ -f "$f" && ! -h "$f" ]]; then
+    magick "$f" -quality 98 "${f%.*}.avif"
+  fi
+done
+
+# Find all the original .WEBPs and move them to our previously created "_review" folder if it's a file and not a symlink
+
+for e in ./*.[Ww][Ee][Bb][Pp] ; do
+  if [[ -f "$e" && ! -h "$e" ]] ; then
+    mv "$e" _review
+  fi
+done
