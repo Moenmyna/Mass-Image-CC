@@ -3,13 +3,25 @@
 # SPDX-License-Identifier: MPL-2.0
 
 # NOTE: This should be the alternative to optimize JPG ONLY if you're unable to install the JXL reference tool, 
-# "cjxl", as this is a LOSSY conversion
+# "cjxl", as this is a LOSSY conversion and performs worse than cjxl
 
-# Find all the .jpg/jpeg files in the current working directory, invoke the magick command on each file, 
-# convert those files to .jxl with the quality setting at "95", do this until all files have been converted.
+# Test to see if we can make a "_review" folder for the output, if not then exit
 
-for f in ./*.jp*g ; do magick "$f" -quality 95 "${f%.jp*g}.jxl" ; done
+mkdir _review || { echo "Folder _review already exists, please rename or remove before continuing!" >&2; exit 1; }
 
-# Move all the leftover .jpg files to a review folder after conversion is complete.
+# Find all JPG files in current directory, use the magick tool to convert to JXL, the test will exclude any symlinks!
 
-mkdir _review && mv ./*.jpg _review
+for f in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$f" && ! -h "$f" ]]; then
+    magick "$f" -quality 95 "${f%.*}.jxl"
+  fi
+done
+
+# Find all the original .JPGs and move them to our previously created "_review" folder if it's a file and not a symlink.
+
+for e in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$e" && ! -h "$e" ]] ; then
+    mv "$e" _review
+  fi
+done
+
