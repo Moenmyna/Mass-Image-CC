@@ -1,0 +1,28 @@
+#! /bin/bash
+
+# SPDX-License-Identifier: MPL-2.0
+
+# NOTE: You need the "cjxl" tool to run this!
+# This is a *lossy* conversion, controlled by the "-d <#>" flag!
+# "-d 0.4" is chosen as a good balance between quality and file size
+# Recommend changing -d to 1.0 if greater file size reduction is desired!
+
+# Test to see if we can make a "_review" folder for the output, if not then exit
+
+mkdir _review || { echo "Folder _review already exists, please rename or remove before continuing!" >&2; exit 1; }
+
+# Find all PNG files in current directory, use the CJXL tool to compress and convert to JXL, the test will exclude any symlinks!
+
+for f in ./*.[Pp][Nn][Gg] ; do
+  if [[ -f "$f" && ! -h "$f" ]]; then
+    cjxl -d 0.4 --quiet "$f" "${f%.*}.jxl"
+  fi
+done
+
+# Find all the original .PNGs and move them to our previously created "_review" folder if it's a file and not a symlink
+
+for e in ./*.[Pp][Nn][Gg] ; do
+  if [[ -f "$e" && ! -h "$e" ]] ; then
+    mv "$e" _review
+  fi
+done
