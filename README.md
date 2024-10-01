@@ -6,9 +6,8 @@ Inside you'll find scripts that convert images primarily to either AVIF or JXL. 
 
 You can also find copy-pastable versions of the scripts in the `One_Line_Scripts.md` document in this repo; in the event that you don't want to install the scripts themselves and just want to perform a conversion manually or tweak the settings more easily before running!
 
-## Disclaimer
-
-My hope in sharing these is that they will be found useful but please note that you do so at your ***own risk!*** I am not responsible for any potential loss of data that may occur when using these scripts!
+> [!CAUTION]
+> **Disclaimer**: My hope in sharing these is that they will be found useful but please note that you do so at your ***own risk!*** I am not responsible for any potential loss of data that may occur when using these scripts!
 
 ## Installation and Usage
 ### Pre-requisite
