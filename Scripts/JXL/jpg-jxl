@@ -17,6 +17,11 @@ for f in ./*.[Jj][Pp]*[Gg] ; do
   fi
 done
 
+# Find all the original .JPGs and move them to our previously created "_review" folder if it's a file and not a symlink.
 
-# Create directory _review and then move all JPG files into it
+for e in ./*.[Jj][Pp]*[Gg] ; do
+  if [[ -f "$e" && ! -h "$e" ]] ; then
+    mv "$e" _review
+  fi
+done
 
