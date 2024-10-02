@@ -10,27 +10,27 @@ Happy converting!
 
 ## (PNG to AVIF) [Lossy]
 ```bash
-for f in ./*.png ; do magick "$f" -quality 98 "${f%.png}.avif" ; done && mkdir _review && mv ./*.png _review
+for f in ./*.png ; do magick "$f" -quality 98 "${f%.*}.avif" ; done && mkdir _review && mv ./*.png _review
 ```
 
 ## (JPG to AVIF) Script to reduce filesize of JPGs [Lossy]
 ```bash
-for f in ./*.jp*g ; do magick "$f" -quality 96 "${f%.jp*g}.avif" ; done && mkdir _review && mv ./*.jp*g _review
+for f in ./*.jp*g ; do magick "$f" -quality 96 "${f%.*}.avif" ; done && mkdir _review && mv ./*.jp*g _review
 ```
 
 ## (JPG to AVIF) If it's *really* big, add -resize flag, adjust % from 80%-50% as necessary [Lossy]
 ```bash
-for f in ./*.jp*g ; do magick "$f" -resize 75% -quality 96 "${f%.jp*g}.avif" ; done && mkdir _review && mv ./*.jp*g _review
+for f in ./*.jp*g ; do magick "$f" -resize 75% -quality 96 "${f%.*}.avif" ; done && mkdir _review && mv ./*.jp*g _review
 ```
 
 ## (WEBP to AVIF) Script to reduce WEBP [Lossy]
 ```bash
-for f in ./*.webp ; do magick "$f" -quality 98 "${f%.webp}.avif" ; done && mkdir _review && mv ./*.webp _review
+for f in ./*.webp ; do magick "$f" -quality 98 "${f%.*}.avif" ; done && mkdir _review && mv ./*.webp _review
 ```
 
 ## (AVIF to WEBP) If AVIF doesn't work, change to WEBP for sharing easily [Lossless]
 ```bash
-for f in ./*.avif; do magick "$f" -quality 100 "${f%.avif}.webp" ; done && mkdir _review && mv ./*.avif _review
+for f in ./*.avif; do magick "$f" -quality 100 "${f%.*}.webp" ; done && mkdir _review && mv ./*.avif _review
 ```
 
 # JXL Targets
@@ -38,26 +38,26 @@ for f in ./*.avif; do magick "$f" -quality 100 "${f%.avif}.webp" ; done && mkdir
 
 ## (PNG to JXL) [Lossy]
 ```bash
-for f in ./*.png ; do magick "$f" -quality 98 "${f%.png}.jxl" ; done && mkdir _review && mv ./*.png _review
+for f in ./*.png ; do magick "$f" -quality 98 "${f%.*}.jxl" ; done && mkdir _review && mv ./*.png _review
 ```
 
 ## (PNG to JXL) Using the JXL reference tool [Lossy]
 ```bash
-for f in ./*.png ; do cjxl -d 0.4 --quiet "$f" "${f%.png}.jxl" ; done && mkdir _review && mv ./*.png _review
+for f in ./*.png ; do cjxl -d 0.4 --quiet "$f" "${f%.*}.jxl" ; done && mkdir _review && mv ./*.png _review
 ```
 
 ## (JPG to JXL) Using the reference JXL tool [Lossless]
 ```bash
-for f in ./*.jp*g ; do cjxl --quiet --lossless_jpeg=1 "$f" "${f%.jp*g}.jxl" ; done && mkdir _review && mv ./*.jp*g _review
+for f in ./*.jp*g ; do cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl" ; done && mkdir _review && mv ./*.jp*g _review
 ```
 
 ## (JPG to JXL) Reduce filesize using the reference tool [Lossy]
 ```bash
-for f in ./*.jp*g ; do cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.jp*g}.jxl" ; done && mkdir _review && mv ./*.jp*g _review
+for f in ./*.jp*g ; do cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.*}.jxl" ; done && mkdir _review && mv ./*.jp*g _review
 ```
 
 ## (JPG to JXL) If you can't get/use the JXL ref tool [Lossy]
 ```bash
-for f in ./*.jp*g ; do magick "$f" -quality 95 "${f%.jp*g}.jxl" ; done && mkdir _review && mv ./*.jp*g _review
+for f in ./*.jp*g ; do magick "$f" -quality 95 "${f%.*}.jxl" ; done && mkdir _review && mv ./*.jp*g _review
 ```
 
