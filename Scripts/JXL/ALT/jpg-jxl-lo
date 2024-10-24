@@ -12,7 +12,7 @@
 
 mkdir _review || { echo "Folder _review already exists, please rename or remove before continuing!" >&2; exit 1; }
 
-# Find all JPG files in current directory, use the CJXL tool to losslessly convert to JXL, the test will exclude any symlinks!
+# Find all JPG files in current directory, use the CJXL tool to do a lossy conversion to JXL, the test will exclude any symlinks!
 
 for f in ./*.[Jj][Pp]*[Gg] ; do
   if [[ -f "$f" && ! -h "$f" ]]; then
