@@ -18,43 +18,36 @@ choice="$choices"
 
 case $choice in
 "$webpavif") fpaths="./*.[Ww][Ee][Bb][Pp]" ;;
-"$pngavif"|"$pngjxl") fpaths="./*.[Pp][Nn][Gg]" ;;
-"$jpgjxl"|"$jpgjxllo") fpaths="./*.[Jj][Pp]*[Gg]" ;;
+"$pngavif" | "$pngjxl") fpaths="./*.[Pp][Nn][Gg]" ;;
+"$jpgjxl" | "$jpgjxllo") fpaths="./*.[Jj][Pp]*[Gg]" ;;
 "$quit") exit 1 ;;
 *) exit 1 ;;
 esac
 
 convrtim() {
-case $choice in
-"$webpavif")  magick "$f" -quality 100 "${f%.*}.webp"  ;;
-"$pngavif")  magick "$f" -quality 98 "${f%.*}.avif"  ;;
-"$jpgjxl")  cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl" ;;
-"$pngjxl")  cjxl -d 0.4 --quiet "$f" "${f%.*}.jxl"  ;;
-"$jpgjxllo")  cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.*}.jxl" ;;
-esac
+  case $choice in
+  "$webpavif") magick "$f" -quality 100 "${f%.*}.webp" ;;
+  "$pngavif") magick "$f" -quality 98 "${f%.*}.avif" ;;
+  "$jpgjxl") cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl" ;;
+  "$pngjxl") cjxl -d 0.4 --quiet "$f" "${f%.*}.jxl" ;;
+  "$jpgjxllo") cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.*}.jxl" ;;
+  esac
 }
 
-# revdir() {
-#   mkdir _review || {
-#     echo "Folder _review already exists, please rename or remove before continuing!" >&2
-#     exit 1
-#   }
-# }
-
 revdir() {
-  mkdir _review 2> /dev/null || {
-    gum log -s -t rfc822 -l error "Folder _review already exists, please rename or remove before continuing!" 
+  mkdir _review 2>/dev/null || {
+    gum log -s -t rfc822 -l error "Folder _review already exists, please rename or remove before continuing!"
     exit 1
   }
 }
-
 
 conversion() {
   for f in $fpaths; do
     if [[ -f "$f" && ! -L "$f" ]]; then
       convrtim "$f" && gum log -s -t rfc822 -l info "Converting...$f"
-    elif [[ ! -f "$f" && ! -L "$f"  ]]; then
-    gum log -s -t rfc822 -l error "No images were found to convert!"
+    elif [[ ! -f "$f" && ! -L "$f" ]]; then
+      gum log -s -t rfc822 -l error "No images were found to convert!"
+      exit 1
     fi
   done
 }
@@ -62,15 +55,12 @@ conversion() {
 moveto() {
   for e in $fpaths; do
     if [[ -f "$e" && ! -L "$e" ]]; then
-      mv "$e" _review
+      mv "$e" _review && gum log -s -t rfc822 -l info "Moving...$e to _review"
     fi
   done
 }
 
 
-# export -f conversion
-
-revdir
-# gum spin --title "Converting..." -- 
-conversion
-moveto
+revdir 
+conversion && gum log -s -t rfc822 -l info "All images converted!" 
+moveto && gum log -s -t rfc822 -l info 'All done~!!'
