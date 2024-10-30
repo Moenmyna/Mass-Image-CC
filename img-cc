@@ -52,7 +52,9 @@ revdir() {
 conversion() {
   for f in $fpaths; do
     if [[ -f "$f" && ! -L "$f" ]]; then
-      convrtim "$f"
+      convrtim "$f" && gum log -s -t rfc822 -l info "Converting...$f"
+    elif [[ ! -f "$f" && ! -L "$f"  ]]; then
+    gum log -s -t rfc822 -l error "No images were found to convert!"
     fi
   done
 }
