@@ -17,11 +17,13 @@ choices=$(gum choose --header="What are we converting today?" "$pngavif" "$webpa
 choice="$choices"
 
 case $choice in
-  "$webpavif") path="./*.[Ww][Ee][Bb][Pp]" ;;
-  "$pngavif") path="./*.[Pp][Nn][Gg]" ;;
-  "$jpgjxl") path="./*.[Jj][Pp]*[Gg]" ;;
-  "$pngjxl") path="./*.[Pp][Nn][Gg]" ;;
-  "$jpgjxllo") path="./*.[Jj][Pp]*[Gg]" ;;
+  "$webpavif") fpaths="./*.[Ww][Ee][Bb][Pp]" ;;
+  "$pngavif") fpaths="./*.[Pp][Nn][Gg]" ;;
+  "$jpgjxl") fpaths="./*.[Jj][Pp]*[Gg]" ;;
+  "$pngjxl") fpaths="./*.[Pp][Nn][Gg]" ;;
+  "$jpgjxllo") fpaths="./*.[Jj][Pp]*[Gg]" ;;
+  "$quit") exit 1 ;;
+esac
 
 
 revdir() {
@@ -32,7 +34,7 @@ revdir() {
 }
 
 conversion() {
-  for f in ./*.[Jj][Pp]*[Gg]; do
+  for f in $fpaths ; do
     if [[ -f "$f" && ! -L "$f" ]]; then
       cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl"
     fi
@@ -41,10 +43,16 @@ conversion() {
 }
 
 moveto() {
-  for e in ./*.[Jj][Pp]*[Gg]; do
+  for e in $fpaths ; do
     if [[ -f "$e" && ! -L "$e" ]]; then
       mv "$e" _review
     fi
   done
 }
-# fi
+
+revdir
+
+conversion 
+# gum spin --title "Converting..."
+
+moveto
