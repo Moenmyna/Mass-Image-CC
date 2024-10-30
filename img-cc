@@ -2,16 +2,27 @@
 
 # SPDX-License-Identifier: MPL-2.0
 
+webpavif="WEBP to AVIF"
+pngavif="PNG to AVIF"
 jpgjxl="JPG to JXL"
 pngjxl="PNG to JXL"
+jpgjxllo="JPG to JXL (Lossy)"
 
-choices=$(gum choose --header="What are we converting today?" "$jpgjxl" "$pngjxl")
+# altconvs="Alternate Conversions"
+quit="Quit"
+
+choices=$(gum choose --header="What are we converting today?" "$pngavif" "$webpavif" "$jpgjxl" "$pngjxl" "$jpgjxllo" "$quit")
 
 # if [[ "$choices" == "$jpgjxl" ]]; then
-#   mkdir _review || {
-#     echo "Folder _review already exists, please rename or remove before continuing!" >&2
-#     exit 1
-#   }
+choice="$choices"
+
+case $choice in
+  "$webpavif") path="./*.[Ww][Ee][Bb][Pp]" ;;
+  "$pngavif") path="./*.[Pp][Nn][Gg]" ;;
+  "$jpgjxl") path="./*.[Jj][Pp]*[Gg]" ;;
+  "$pngjxl") path="./*.[Pp][Nn][Gg]" ;;
+  "$jpgjxllo") path="./*.[Jj][Pp]*[Gg]" ;;
+
 
 revdir() {
   mkdir _review || {
