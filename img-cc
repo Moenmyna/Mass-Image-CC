@@ -17,42 +17,58 @@ choices=$(gum choose --header="What are we converting today?" "$pngavif" "$webpa
 choice="$choices"
 
 case $choice in
-  "$webpavif") fpaths="./*.[Ww][Ee][Bb][Pp]" ;;
-  "$pngavif") fpaths="./*.[Pp][Nn][Gg]" ;;
-  "$jpgjxl") fpaths="./*.[Jj][Pp]*[Gg]" ;;
-  "$pngjxl") fpaths="./*.[Pp][Nn][Gg]" ;;
-  "$jpgjxllo") fpaths="./*.[Jj][Pp]*[Gg]" ;;
-  "$quit") exit 1 ;;
+"$webpavif") fpaths="./*.[Ww][Ee][Bb][Pp]" ;;
+"$pngavif"|"$pngjxl") fpaths="./*.[Pp][Nn][Gg]" ;;
+"$jpgjxl"|"$jpgjxllo") fpaths="./*.[Jj][Pp]*[Gg]" ;;
+"$quit") exit 1 ;;
+*) exit 1 ;;
 esac
 
+convrtim() {
+case $choice in
+"$webpavif")  magick "$f" -quality 100 "${f%.*}.webp"  ;;
+"$pngavif")  magick "$f" -quality 98 "${f%.*}.avif"  ;;
+"$jpgjxl")  cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl" ;;
+"$pngjxl")  cjxl -d 0.4 --quiet "$f" "${f%.*}.jxl"  ;;
+"$jpgjxllo")  cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.*}.jxl" ;;
+esac
+}
+
+# revdir() {
+#   mkdir _review || {
+#     echo "Folder _review already exists, please rename or remove before continuing!" >&2
+#     exit 1
+#   }
+# }
 
 revdir() {
-  mkdir _review || {
-    echo "Folder _review already exists, please rename or remove before continuing!" >&2
+  mkdir _review 2> /dev/null || {
+    gum log -s -t rfc822 -l error "Folder _review already exists, please rename or remove before continuing!" 
     exit 1
   }
 }
 
+
 conversion() {
-  for f in $fpaths ; do
+  for f in $fpaths; do
     if [[ -f "$f" && ! -L "$f" ]]; then
-      cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl"
+      convrtim "$f"
     fi
-    # gum spin --title "Converting..."
   done
 }
 
 moveto() {
-  for e in $fpaths ; do
+  for e in $fpaths; do
     if [[ -f "$e" && ! -L "$e" ]]; then
       mv "$e" _review
     fi
   done
 }
 
+
+# export -f conversion
+
 revdir
-
-conversion 
-# gum spin --title "Converting..."
-
+# gum spin --title "Converting..." -- 
+conversion
 moveto
