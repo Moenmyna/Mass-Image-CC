@@ -33,7 +33,7 @@ convrtim() {
 
 revdir() {
   mkdir _review 2>/dev/null || {
-    gum log -s -t rfc822 -l error "Folder _review already exists, please rename or remove before continuing!"
+    gum log -s -t rfc822 -l error "❌Folder _review already exists, please rename or remove before continuing!"
     exit 1
   }
 }
@@ -41,9 +41,9 @@ revdir() {
 conversion() {
   for f in $fpaths; do
     if [[ -f "$f" && ! -L "$f" ]]; then
-      convrtim "$f" && gum log -s -t rfc822 -l info "Converting...$f"
+      convrtim "$f" && gum log -s -t rfc822 -l info "✨Converting...$f"
     elif [[ ! -f "$f" && ! -L "$f" ]]; then
-      gum log -s -t rfc822 -l error "No images were found to convert!"
+      gum log -s -t rfc822 -l error "‼️No images were found to convert!"
       exit 1
     fi
   done
@@ -52,12 +52,12 @@ conversion() {
 moveto() {
   for e in $fpaths; do
     if [[ -f "$e" && ! -L "$e" ]]; then
-      mv "$e" _review && gum log -s -t rfc822 -l info "Moving...$e to _review"
+      mv "$e" _review && gum log -s -t rfc822 -l info "📦Moving...$e to _review"
     fi
   done
 }
 
 
 revdir 
-conversion && gum log -s -t rfc822 -l info "All images converted!" 
-moveto && gum log -s -t rfc822 -l info 'All done~!!'
+conversion && gum log -s -t rfc822 -l info "✅All images converted!" 
+moveto && gum log -s -t rfc822 -l info '🎉All done~!!'
