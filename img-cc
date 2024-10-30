@@ -7,13 +7,10 @@ pngavif="PNG to AVIF"
 jpgjxl="JPG to JXL"
 pngjxl="PNG to JXL"
 jpgjxllo="JPG to JXL (Lossy)"
-
-# altconvs="Alternate Conversions"
 quit="Quit"
 
 choices=$(gum choose --header="What are we converting today?" "$pngavif" "$webpavif" "$jpgjxl" "$pngjxl" "$jpgjxllo" "$quit")
 
-# if [[ "$choices" == "$jpgjxl" ]]; then
 choice="$choices"
 
 case $choice in
