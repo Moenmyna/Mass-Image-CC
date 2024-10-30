@@ -1,0 +1,39 @@
+#! /bin/bash
+
+# SPDX-License-Identifier: MPL-2.0
+
+jpgjxl="JPG to JXL"
+pngjxl="PNG to JXL"
+
+choices=$(gum choose --header="What are we converting today?" "$jpgjxl" "$pngjxl")
+
+# if [[ "$choices" == "$jpgjxl" ]]; then
+#   mkdir _review || {
+#     echo "Folder _review already exists, please rename or remove before continuing!" >&2
+#     exit 1
+#   }
+
+revdir() {
+  mkdir _review || {
+    echo "Folder _review already exists, please rename or remove before continuing!" >&2
+    exit 1
+  }
+}
+
+conversion() {
+  for f in ./*.[Jj][Pp]*[Gg]; do
+    if [[ -f "$f" && ! -L "$f" ]]; then
+      cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl"
+    fi
+    # gum spin --title "Converting..."
+  done
+}
+
+moveto() {
+  for e in ./*.[Jj][Pp]*[Gg]; do
+    if [[ -f "$e" && ! -L "$e" ]]; then
+      mv "$e" _review
+    fi
+  done
+}
+# fi
