@@ -2,6 +2,7 @@
 
 # SPDX-License-Identifier: MPL-2.0
 
+# Set variables to pass as options for `gum choose`
 webpavif="WEBP to AVIF"
 pngavif="PNG to AVIF"
 jpgjxl="JPG to JXL"
@@ -9,10 +10,13 @@ pngjxl="PNG to JXL"
 jpgjxllo="JPG to JXL (Lossy)"
 quit="Quit"
 
+# Ask the user for what we want to convert!
 choices=$(gum choose --header="What are we converting today?" "$pngavif" "$webpavif" "$jpgjxl" "$pngjxl" "$jpgjxllo" "$quit")
 
 choice="$choices"
 
+# Review the user's choice, then set the $fpaths variable for later
+# If the user chose to quit, exit the script!
 case $choice in
 "$webpavif") fpaths="./*.[Ww][Ee][Bb][Pp]" ;;
 "$pngavif" | "$pngjxl") fpaths="./*.[Pp][Nn][Gg]" ;;
@@ -21,6 +25,8 @@ case $choice in
 *) exit 1 ;;
 esac
 
+# Review the user's choice and based on that, 
+## determine which tool and setting is required when the function is called
 convrtim() {
   case $choice in
   "$webpavif") magick "$f" -quality 100 "${f%.*}.webp" ;;
@@ -31,6 +37,8 @@ convrtim() {
   esac
 }
 
+# The function will try to make a directory named _review
+# If it fails, it'll exit and show an error to the user!
 revdir() {
   mkdir _review 2>/dev/null || {
     gum log -s -t rfc822 -l error "❌Folder _review already exists, please rename or remove before continuing!"
@@ -38,6 +46,11 @@ revdir() {
   }
 }
 
+# Where the magic happens
+# The function takes the search pattern from the previously set $fpaths variable, then
+## uses that to find all images that match that pattern 
+# If images are found, the script then converts using the tool chosen based on the pattern until done
+# If no images are found, an error is shown to the user and the script exits!
 conversion() {
   for f in $fpaths; do
     if [[ -f "$f" && ! -L "$f" ]]; then
@@ -49,6 +62,8 @@ conversion() {
   done
 }
 
+# This function then takes all the images identified in the pattern from $fpaths and
+## moves them all into the _review folder that was created earlier!
 moveto() {
   for e in $fpaths; do
     if [[ -f "$e" && ! -L "$e" ]]; then
@@ -57,7 +72,7 @@ moveto() {
   done
 }
 
-
+# Call the 3 functions, print messages when completed!
 revdir 
 conversion && gum log -s -t rfc822 -l info "✅All images converted!" 
 moveto && gum log -s -t rfc822 -l info '🎉All done~!!'
