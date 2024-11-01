@@ -29,8 +29,7 @@ esac
 ## determine which tool and setting is required when the function is called
 convrtim() {
   case $choice in
-  "$webpavif") magick "$f" -quality 100 "${f%.*}.webp" ;;
-  "$pngavif") magick "$f" -quality 98 "${f%.*}.avif" ;;
+  "$pngavif" | "$webpavif") magick "$f" -quality 98 "${f%.*}.avif" ;;
   "$jpgjxl") cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl" ;;
   "$pngjxl") cjxl -d 0.4 --quiet "$f" "${f%.*}.jxl" ;;
   "$jpgjxllo") cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.*}.jxl" ;;
