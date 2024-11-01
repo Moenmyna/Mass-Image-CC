@@ -7,7 +7,7 @@ This repo contains some bash scripts that I've made to help me reduce the size o
 
 Here you'll find scripts that convert images primarily to either AVIF or JXL. Most people will probably want to use the AVIF scripts due to support for JXL being low (Unfortunately...😢) but feel free to use what you prefer! Additionally all the scripts have comments inside describing what they do, so please look at their source if their purpose is unclear.
 
-![A gif of img-cc in action, made with VHS!](https://vhs.charm.sh/vhs-e04Wn2xF962TYkKvPGDp0.gif)
+![A gif of img-cc in action, made with VHS!](https://vhs.charm.sh/vhs-4VH5m1ZXZj7pysq9p0I89E.gif)
 
 > [!CAUTION]
 > **Disclaimer**: My hope in sharing these is that they will be found useful but please note that you do so at your ***own risk!*** I am not responsible for any potential loss of data that may occur when using these scripts!
