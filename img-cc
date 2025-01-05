@@ -8,10 +8,11 @@ pngavif="PNG to AVIF"
 jpgjxl="JPG to JXL"
 pngjxl="PNG to JXL"
 jpgjxllo="JPG to JXL (Lossy)"
+revertjxl="JXL to JPG (Revert)"
 quit="Quit"
 
 # Ask the user for what we want to convert!
-choices=$(gum choose --header="What are we converting today?" "$pngavif" "$webpavif" "$jpgjxl" "$pngjxl" "$jpgjxllo" "$quit")
+choices=$(gum choose --header="What are we converting today?" "$pngavif" "$webpavif" "$jpgjxl" "$pngjxl" "$jpgjxllo" "$revertjxl" "$quit")
 
 choice="$choices"
 
@@ -21,6 +22,7 @@ case $choice in
 "$webpavif") fpaths="./*.[Ww][Ee][Bb][Pp]" ;;
 "$pngavif" | "$pngjxl") fpaths="./*.[Pp][Nn][Gg]" ;;
 "$jpgjxl" | "$jpgjxllo") fpaths="./*.[Jj][Pp]*[Gg]" ;;
+"$revertjxl") fpaths="./*.[Jj][Xx][Ll]" ;;
 "$quit") exit 1 ;;
 *) exit 1 ;;
 esac
@@ -33,6 +35,7 @@ convrtim() {
   "$jpgjxl") cjxl --quiet --lossless_jpeg=1 "$f" "${f%.*}.jxl" ;;
   "$pngjxl") cjxl -d 0.4 --quiet "$f" "${f%.*}.jxl" ;;
   "$jpgjxllo") cjxl --quiet -d 1.0 --lossless_jpeg=0 "$f" "${f%.*}.jxl" ;;
+  "$revertjxl") djxl --quiet "$f" "${f%.*}.jpg" ;;
   esac
 }
 
