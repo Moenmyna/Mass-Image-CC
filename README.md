@@ -1,6 +1,6 @@
 # Mass image compression and conversion scripts
 
-This repo contains some bash scripts that I've made to help me reduce the filesize of images on my drives. This was both a way to help solve a problem my own way as well as help me learn bash scripting!
+This repo contains some bash scripts that I've made to help me reduce the filesize of images on my drives. This was both a way to help solve a problem my own way as well as help me learn more about bash scripting!
 
 The scripts I've made convert images primarily to either AVIF or JXL. Most people will probably want to use the AVIF scripts due to overall support for JXL being low (Unfortunately...😢) but feel free to use what you prefer! 
 
