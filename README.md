@@ -23,7 +23,7 @@ Additionally all the scripts have comments inside describing what they do, so pl
 > [!TIP]
 > Before running the script, I'd recommend moving the images you want to convert to their own folder; the script will convert *everything* that matches the chosen pattern in the current folder only.
 
-#### Using img-cc - (Recommended)
+### Using img-cc - (Recommended)
 
 Clone the repo or download the latest release and if necessary, give `img-cc` execute permissions with `chmod +x`. Then just symlink `img-cc` anywhere that's on your **$PATH**, such as `~/.local/bin`.
 
@@ -31,7 +31,7 @@ Once done, navigate to a folder in your terminal with the images you want to con
 
 Once done, you will find all the original images that were converted in the `_review` folder that was created at the start. If the converted images look good, then feel free to remove the images in `_review`!
 
-#### Using the loose legacy scripts
+### Using the loose legacy scripts
 
 As before, I recommend cloning this repo to a folder of your choosing or downloading the latest release and then symlinking the scripts you want to your `~/.local/bin` from the repo. You can also place them anywhere you'd like, as long as they're on your **$PATH**. Make sure that the scripts have execute permissions with `chmod +x` if necessary!
 
